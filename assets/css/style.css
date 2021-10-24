@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+  color: white;
+  background-color: darkblue;
+  background-image: linear-gradient(to right, lightblue, darkblue);
+  text-align: center;
+}
+
+h2, h3 {
+    font-size: 25px;
+    margin: 10px 10px 0 10px;
+    font-weight: bolder;
+}
+
+h4 {
+    font-size: 20px;
+}
+
+input {
+    width: 100%;
+    margin: 0 10px 10px 10px;
+}
+
+button {
+    color: white;
+    width: 100%;
+    margin: 10px;
+    text-align: center;
+    background-color: rgb(36, 171, 216);
+    border-radius: 5px;
+}
+
+.prvSearch p {
+    width: 100%;
+    margin: 10px;
+    text-align: center;
+    background-color: rgb(165, 164, 164);
+    border-radius: 5px;
+}
+
+.cntWeather {
+    border: 1px solid black;
+    padding: 20px;
+    margin: 10px;
+}
+
+.card {
+    color: white;
+    background-color: rgb(50, 50, 73);
+    border: 1px solid black;
+    margin: 0 10px 10px 10px ;
+}
+
