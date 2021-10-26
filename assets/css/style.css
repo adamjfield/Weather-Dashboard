@@ -10,14 +10,14 @@ header {
   text-align: center;
 }
 
-h2, h3 {
+h2, h3, span {
     font-size: 25px;
     margin: 10px 10px 0 10px;
     font-weight: bolder;
 }
 
 h4 {
-    font-size: 20px;
+    font-size: 19px;
 }
 
 input {
@@ -34,7 +34,7 @@ button {
     border-radius: 5px;
 }
 
-.prvSearch p {
+.prvSearch {
     width: 100%;
     margin: 10px;
     text-align: center;
@@ -44,8 +44,12 @@ button {
 
 .cntWeather {
     border: 1px solid black;
-    padding: 20px;
+    padding: 0 20px 20px 5px;
     margin: 10px;
+}
+
+.cntWeather h2 {
+    margin: 0 10px 10px 10px;
 }
 
 .card {

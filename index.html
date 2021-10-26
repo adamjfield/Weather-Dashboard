@@ -23,34 +23,42 @@
     </header>
     <div class="row">
       <div class="col-md-3">
+        <!-- div for search function -->
         <div>
           <h2>Search for a City:</h2>
-          <form>
+          <form id="search-form">
             <label for=""></label>
-            <input type="text" placeholder="City" id="citySrch" />
+            <input
+              type="city"
+              placeholder="City"
+              id="citySearch"
+              autofocus="true"
+            />
             <button>Search</button>
           </form>
         </div>
-
-        <div class="prvSearch">
-          <p>Kansas City</p>
-          <p>New York</p>
-          <p>Dallas</p>
-        </div>
+        <!-- div for previous searched cities -->
+        <div id="prvSearch-container"></div>
       </div>
+      <!-- div for current weather -->
       <div class="col-md-9">
-        <div class="cntWeather">
-          <h2>Lenexa</h2>
-          <p>Icon:</p>
-          <p>Temp:</p>
-          <p>Wind:</p>
-          <p>Humidity:</p>
-          <p>UV Index</p>
+        <div class="col-md-11" id="cntWeather-container">
+          <!-- <div class="cntWeather">
+            <span>
+              Lenexa
+              <img src="http://openweathermap.org/img/w/04n.png" alt="" />
+            </span>
+            <p>Icon:</p>
+            <p>Temp:</p>
+            <p>Wind:</p>
+            <p>Humidity:</p>
+            <p>UV Index</p>
+          </div> -->
         </div>
-
+        <!-- 5 day forecast section -->
         <h3>5-Day Forecast:</h3>
         <div class="row">
-          <div class="card col-md-2">
+          <div class="card col-md-11 col-lg-2">
             <h4>01/01/2021</h4>
             <div>
               <p>Icon:</p>
@@ -59,7 +67,7 @@
               <p>Humidity:</p>
             </div>
           </div>
-          <div class="card col-md-2">
+          <div class="card col-md-11 col-lg-2">
             <h4>01/01/2021</h4>
             <div>
               <p>Icon:</p>
@@ -68,7 +76,7 @@
               <p>Humidity:</p>
             </div>
           </div>
-          <div class="card col-md-2">
+          <div class="card col-md-11 col-lg-2">
             <h4>01/01/2021</h4>
             <div>
               <p>Icon:</p>
@@ -77,7 +85,7 @@
               <p>Humidity:</p>
             </div>
           </div>
-          <div class="card col-md-2">
+          <div class="card col-md-11 col-lg-2">
             <h4>01/01/2021</h4>
             <div>
               <p>Icon:</p>
@@ -86,7 +94,7 @@
               <p>Humidity:</p>
             </div>
           </div>
-          <div class="card col-md-2">
+          <div class="card col-md-11 col-lg-2">
             <h4>01/01/2021</h4>
             <div>
               <p>Icon:</p>
@@ -98,6 +106,6 @@
         </div>
       </div>
     </div>
+    <script src="./assets/js/script.js"></script>
   </body>
-  <script src="./assets/js/script.js"></script>
 </html>
