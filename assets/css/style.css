@@ -8,60 +8,93 @@ header {
   background-color: darkblue;
   background-image: linear-gradient(to right, lightblue, darkblue);
   text-align: center;
+  padding: 25px 0 10px 0;
 }
 
-h2, h3, span {
-    font-size: 25px;
+h2 {
+    font-size: 23px;
     margin: 10px 10px 0 10px;
     font-weight: bolder;
 }
 
+h3,
+span {
+  font-size: 25px;
+  margin: 10px 10px 0 10px;
+  font-weight: bolder;
+}
+
 h4 {
-    font-size: 19px;
+  font-size: 19px;
 }
 
 input {
-    width: 100%;
-    margin: 0 10px 10px 10px;
+  width: 100%;
+  margin: 0 10px 10px 10px;
 }
 
 button {
-    color: white;
-    width: 100%;
-    margin: 10px;
-    text-align: center;
-    background-color: rgb(36, 171, 216);
-    border-radius: 5px;
+  color: white;
+  width: 100%;
+  margin: 10px;
+  text-align: center;
+  background-color: rgb(36, 171, 216);
+  border-radius: 5px;
 }
 
 .prvSearch {
-    width: 100%;
-    margin: 10px;
-    text-align: center;
-    background-color: rgb(165, 164, 164);
-    border-radius: 5px;
+  width: 100%;
+  margin: 10px;
+  text-align: center;
+  background-color: rgb(165, 164, 164);
+  border-radius: 5px;
 }
 
 .cntWeather {
-    border: 1px solid black;
-    padding: 0 20px 20px 5px;
-    margin: 10px;
+  border: 1px solid black;
+  padding: 0 20px 20px 5px;
+  margin: 10px;
 }
 
 .cntWeather h2 {
-    margin: 0 10px 10px 10px;
+  margin: 0 10px 10px 10px;
 }
 
 .card {
-    color: white;
-    background-color: rgb(50, 50, 73);
-    border: 1px solid black;
-    margin: 0 10px 10px 10px ;
-    font-size: 10px;
+  color: white;
+  background-color: rgb(50, 50, 73);
+  border: 1px solid black;
+  margin: 0 10px 10px 10px;
+  font-size: 10px;
 }
 
 .forecastIcon {
-    width: 30px;
+  width: 40px;
 }
 
+@media screen and (max-width: 992px) {
+  span {
+    font-size: 35px;
+  }
 
+  .cntWeather p {
+    font-size: 30px;
+  }
+
+  .cntWeather img {
+    width: 95px;
+  }
+
+  .card {
+    font-size: 20px;
+    margin: 5px 45px 20px 45px;
+  }
+
+  h2, h3 {
+      margin: 10px 20px 0px 40px
+  }
+
+  .forecastIcon {
+    width: 60px;
+  }
+}
