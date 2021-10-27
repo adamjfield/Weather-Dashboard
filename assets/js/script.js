@@ -4,13 +4,14 @@ var searchFormEl = document.querySelector("#search-form");
 var citySearchEl = document.querySelector("#citySearch");
 var prvSearchContainEl = document.querySelector("#prvSearch-container");
 var cntWeatherContainEl = document.querySelector("#cntWeather-container");
+var forecastContainEl = document.querySelector("#forecast-container");
 
 // fetch api call to get city geo coordinates
-var getCoords = function (city) {
+function getCoords(city) {
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
-    "&units=imperial&appid=" +
+    "&appid=" +
     apiKey;
 
   fetch(apiUrl)
@@ -19,9 +20,8 @@ var getCoords = function (city) {
         response.json().then(function (data) {
           var cityLat = data.coord.lat;
           var cityLon = data.coord.lon;
-          getCntWeather(cityLat, cityLon);
-          displayPrvSearch(data);
-          displayCntWeather(data);
+          var cityName = data.name;
+          getCntWeather(cityLat, cityLon, cityName);
         });
       } else {
         alert("Error: City Not Found");
@@ -30,22 +30,30 @@ var getCoords = function (city) {
     .catch(function (error) {
       alert("Unable to connect to OpenWeather");
     });
-};
+}
 
 // api call to get current weather
-var getCntWeather = function (lat, lon) {
+function getCntWeather(lat, lon, name) {
   var apiUrl =
     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
     lat +
     "&lon=" +
     lon +
-    "&exclude=minutely,hourly,alerts&appid=" +
+    "&units=imperial&exclude=minutely,hourly,alerts&appid=" +
     apiKey;
   console.log(apiUrl);
-};
+
+  fetch(apiUrl).then(function (response) {
+    response.json().then(function (data) {
+      displayPrvSearch(name);
+      displayCntWeather(data, name);
+      displayFutureForecast(data);
+    });
+  });
+}
 
 // function to handle search
-var formSearchHandler = function (event) {
+function formSearchHandler(event) {
   event.preventDefault();
 
   // capture city that was searched
@@ -58,45 +66,47 @@ var formSearchHandler = function (event) {
   } else {
     alert("Please enter a city");
   }
-};
+}
 
 // search click listener
 searchFormEl.addEventListener("submit", formSearchHandler);
 
 //function to display previous searches
-var displayPrvSearch = function (data) {
+function displayPrvSearch(data) {
   var prvSearchEl = document.createElement("p");
-  prvSearchEl.textContent = data.name;
+  prvSearchEl.textContent = data;
   prvSearchEl.classList = "prvSearch";
 
-  prvSearchContainEl.appendChild(prvSearchEl);
-};
+  prvSearchContainEl.prepend(prvSearchEl);
+}
 
 // function to display current weather
-var displayCntWeather = function (data) {
-  var iconCode = data.weather[0].icon;
-  var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + "@2x.png";
+function displayCntWeather(data, name) {
+  cntWeatherContainEl.textContent = "";
+
+  var iconCode = data.current.weather[0].icon;
+  var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
 
   var cntWeatherDiv = document.createElement("div");
   cntWeatherDiv.classList = "cntWeather";
 
   var searchedCity = document.createElement("span");
-  searchedCity.textContent = data.name + " (" + today + ") ";
+  searchedCity.textContent = name + " (" + today + ") ";
 
   var wIcon = document.createElement("img");
   wIcon.setAttribute("src", iconUrl);
 
   var cntTemp = document.createElement("p");
-  cntTemp.textContent = "Temp: " + data.main.temp + "\u2109";
+  cntTemp.textContent = "Temp: " + data.current.temp + "\u2109";
 
   var cntWind = document.createElement("p");
-  cntWind.textContent = "Wind: " + data.wind.speed + " MPH";
+  cntWind.textContent = "Wind: " + data.current.wind_speed + " MPH";
 
   var cntHumidity = document.createElement("p");
-  cntHumidity.textContent = "Humidity: " + data.main.humidity + "%";
+  cntHumidity.textContent = "Humidity: " + data.current.humidity + "%";
 
   var cntUv = document.createElement("p");
-  cntUv.textContent = "UV Index: " + "'UV Index'";
+  cntUv.textContent = "UV Index: " + data.current.uvi;
 
   cntWeatherContainEl.appendChild(cntWeatherDiv);
   cntWeatherDiv.appendChild(searchedCity);
@@ -105,4 +115,55 @@ var displayCntWeather = function (data) {
   cntWeatherDiv.appendChild(cntWind);
   cntWeatherDiv.appendChild(cntHumidity);
   cntWeatherDiv.appendChild(cntUv);
-};
+}
+
+function displayFutureForecast(data) {
+  forecastContainEl.textContent = "";
+
+  var forecastTitle = document.createElement("h3");
+  forecastTitle.textContent = "5-Day Forecast:";
+
+  var forecastCardDiv = document.createElement("div");
+  forecastCardDiv.setAttribute("class", "row");
+
+  for (let i = 1; i < 6; i++) {
+    var date = new Date(data.daily[i].dt * 1000).toLocaleDateString().slice(0, 10);
+
+    var iconCode = data.daily[i].weather[0].icon;
+    var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
+
+    var temp = data.daily[i].temp.day;
+
+    var wind = data.daily[i].wind_speed;
+
+    var humidity = data.daily[i].humidity;
+
+    var dailyForecastCard = document.createElement("div");
+    dailyForecastCard.classList = "card col-md-11 col-lg-2";
+
+    var dailyDate = document.createElement("h4");
+    dailyDate.textContent = date;
+
+    var wIcon = document.createElement("img");
+    wIcon.setAttribute("src", iconUrl);
+    wIcon.classList = "forecastIcon"
+
+    var forecastTemp = document.createElement("p");
+    forecastTemp.textContent = "Temp: " + temp + "\u2109";
+
+    var forecastWind = document.createElement("p");
+    forecastWind.textContent = "Wind: " + wind + " MPH";;
+
+    var forecastHumidity = document.createElement("p");
+    forecastHumidity.textContent = "Humidity: " + humidity + "%";;
+
+    forecastContainEl.appendChild(forecastTitle);
+    forecastContainEl.appendChild(forecastCardDiv);
+    forecastCardDiv.appendChild(dailyForecastCard);
+    dailyForecastCard.appendChild(dailyDate);
+    dailyForecastCard.appendChild(wIcon);
+    dailyForecastCard.appendChild(forecastTemp);
+    dailyForecastCard.appendChild(forecastWind);
+    dailyForecastCard.appendChild(forecastHumidity);
+  }
+}

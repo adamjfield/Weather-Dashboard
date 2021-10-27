@@ -57,5 +57,11 @@ button {
     background-color: rgb(50, 50, 73);
     border: 1px solid black;
     margin: 0 10px 10px 10px ;
+    font-size: 10px;
 }
+
+.forecastIcon {
+    width: 30px;
+}
+
 
