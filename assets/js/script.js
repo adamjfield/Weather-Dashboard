@@ -41,7 +41,6 @@ function getCntWeather(lat, lon, name) {
     lon +
     "&units=imperial&exclude=minutely,hourly,alerts&appid=" +
     apiKey;
-  console.log(apiUrl);
 
   fetch(apiUrl).then(function (response) {
     response.json().then(function (data) {
@@ -72,15 +71,15 @@ function formSearchHandler(event) {
 searchFormEl.addEventListener("submit", formSearchHandler);
 
 //function to display previous searches
-function displayPrvSearch(data) {
+function displayPrvSearch(cityName) {
   var prvSearchEl = document.createElement("p");
-  prvSearchEl.textContent = data;
+  prvSearchEl.textContent = cityName;
   prvSearchEl.classList = "prvSearch";
 
   prvSearchContainEl.prepend(prvSearchEl);
 }
 
-// function to display current weather
+// function to display current forecast
 function displayCntWeather(data, name) {
   cntWeatherContainEl.textContent = "";
 
@@ -106,7 +105,23 @@ function displayCntWeather(data, name) {
   cntHumidity.textContent = "Humidity: " + data.current.humidity + "%";
 
   var cntUv = document.createElement("p");
-  cntUv.textContent = "UV Index: " + data.current.uvi;
+  cntUv.textContent = "UV Index: ";
+
+  var cntUvIndex = document.createElement("span");
+  cntUvIndex.textContent = data.current.uvi;
+  cntUvIndex.classList = "uv-index";
+  if (data.current.uvi <= 2) {
+    cntUvIndex.classList = "green";
+  } else if (data.current.uvi >= 3 && data.current.uvi < 6) {
+    cntUvIndex.removeAttribute("class");
+    cntUvIndex.classList = "yellow";
+  } else if (data.current.uvi >= 6 && data.current.uvi < 7) {
+    cntUvIndex.removeAttribute("class");
+    cntUvIndex.classList = "orange";
+  } else {
+    cntUvIndex.removeAttribute("class");
+    cntUvIndex.classList = "red";
+  }
 
   cntWeatherContainEl.appendChild(cntWeatherDiv);
   cntWeatherDiv.appendChild(searchedCity);
@@ -115,8 +130,10 @@ function displayCntWeather(data, name) {
   cntWeatherDiv.appendChild(cntWind);
   cntWeatherDiv.appendChild(cntHumidity);
   cntWeatherDiv.appendChild(cntUv);
+  cntUv.appendChild(cntUvIndex);
 }
 
+// display 5 day forecast
 function displayFutureForecast(data) {
   forecastContainEl.textContent = "";
 
@@ -135,9 +152,7 @@ function displayFutureForecast(data) {
     var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
 
     var temp = data.daily[i].temp.day;
-
     var wind = data.daily[i].wind_speed;
-
     var humidity = data.daily[i].humidity;
 
     var dailyForecastCard = document.createElement("div");

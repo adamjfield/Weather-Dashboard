@@ -12,9 +12,9 @@ header {
 }
 
 h2 {
-    font-size: 23px;
-    margin: 10px 10px 0 10px;
-    font-weight: bolder;
+  font-size: 23px;
+  margin: 10px 10px 0 10px;
+  font-weight: bolder;
 }
 
 h3,
@@ -60,6 +60,10 @@ button {
   margin: 0 10px 10px 10px;
 }
 
+.cntWeather p {
+  margin: 10px 10px 0 10px;
+}
+
 .card {
   color: white;
   background-color: rgb(50, 50, 73);
@@ -72,12 +76,54 @@ button {
   width: 40px;
 }
 
+.green {
+  font-size: 16px;
+  font-weight: normal;
+  background-color: green;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin: 0;
+}
+
+.yellow {
+  font-size: 16px;
+  background-color: orange;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin: 0;
+}
+
+.orange {
+  font-size: 16px;
+  background-color: yellow;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin: 0;
+}
+
+.red {
+  font-size: 16px;
+  background-color: red;
+  color: white;
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin: 0;
+}
+
 @media screen and (max-width: 992px) {
   span {
     font-size: 35px;
   }
 
-  .cntWeather p {
+  .cntWeather p,
+  span,
+  .green,
+  .yellow,
+  .orange,
+  .red {
     font-size: 30px;
   }
 
@@ -90,8 +136,9 @@ button {
     margin: 5px 45px 20px 45px;
   }
 
-  h2, h3 {
-      margin: 10px 20px 0px 40px
+  h2,
+  h3 {
+    margin: 10px 20px 0px 40px;
   }
 
   .forecastIcon {
