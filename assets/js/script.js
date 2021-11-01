@@ -3,8 +3,10 @@ var today = new Date().toLocaleDateString().slice(0, 10);
 var searchFormEl = document.querySelector("#search-form");
 var citySearchEl = document.querySelector("#citySearch");
 var prvSearchContainEl = document.querySelector("#prvSearch-container");
+var prvSearchEl = document.querySelector("#prvSearch-btn");
 var cntWeatherContainEl = document.querySelector("#cntWeather-container");
 var forecastContainEl = document.querySelector("#forecast-container");
+var cities = [];
 
 // fetch api call to get city geo coordinates
 function getCoords(city) {
@@ -22,6 +24,7 @@ function getCoords(city) {
           var cityLon = data.coord.lon;
           var cityName = data.name;
           getCntWeather(cityLat, cityLon, cityName);
+          saveSearch(cityName);
         });
       } else {
         alert("Error: City Not Found");
@@ -30,6 +33,23 @@ function getCoords(city) {
     .catch(function (error) {
       alert("Unable to connect to OpenWeather");
     });
+}
+
+function saveSearch(search) {
+  if (cities.indexOf(search) !== -1) {
+    return;
+  }
+  cities.push(search);
+  localStorage.setItem("cities", JSON.stringify(cities));
+  displayPrvSearch();
+}
+
+function setupSearchHistory() {
+  var storedCities = localStorage.getItem("cities");
+  if (storedCities) {
+    cities = JSON.parse(storedCities);
+  }
+  displayPrvSearch();
 }
 
 // api call to get current weather
@@ -42,41 +62,32 @@ function getCntWeather(lat, lon, name) {
     "&units=imperial&exclude=minutely,hourly,alerts&appid=" +
     apiKey;
 
-  fetch(apiUrl).then(function (response) {
-    response.json().then(function (data) {
-      displayPrvSearch(name);
+  fetch(apiUrl)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
+      displayPrvSearch(cities);
       displayCntWeather(data, name);
       displayFutureForecast(data);
     });
-  });
 }
-
-// function to handle search
-function formSearchHandler(event) {
-  event.preventDefault();
-
-  // capture city that was searched
-  var city = citySearchEl.value.trim();
-
-  // send city to api function or alert if nothing entered
-  if (city) {
-    getCoords(city);
-    citySearchEl.value = "";
-  } else {
-    alert("Please enter a city");
-  }
-}
-
-// search click listener
-searchFormEl.addEventListener("submit", formSearchHandler);
 
 //function to display previous searches
-function displayPrvSearch(cityName) {
-  var prvSearchEl = document.createElement("p");
-  prvSearchEl.textContent = cityName;
-  prvSearchEl.classList = "prvSearch";
+function displayPrvSearch() {
+  prvSearchContainEl.innerHTML = "";
 
-  prvSearchContainEl.prepend(prvSearchEl);
+  for (var i = cities.length - 1; i >= 0; i--) {
+    var prvSearchEl = document.createElement("button");
+    prvSearchEl.setAttribute("type", "button");
+    prvSearchEl.setAttribute("id", "prvSearch-btn");
+    prvSearchEl.classList.add("prvSearch");
+
+    prvSearchEl.setAttribute("dataSearch", cities[i]);
+
+    prvSearchEl.textContent = cities[i];
+    prvSearchContainEl.append(prvSearchEl);
+  }
 }
 
 // function to display current forecast
@@ -184,3 +195,32 @@ function displayFutureForecast(data) {
     dailyForecastCard.appendChild(forecastHumidity);
   }
 }
+
+// function to handle search
+function formSearchHandler(event) {
+  event.preventDefault();
+
+  // capture city that was searched
+  var city = citySearchEl.value.trim();
+
+  // send city to api function or alert if nothing entered
+  if (city) {
+    getCoords(city);
+    citySearchEl.value = "";
+  } else {
+    alert("Please enter a city");
+  }
+}
+
+function handleHistorySearchClick(event) {
+  event.preventDefault();
+
+  // capture city that was searched
+  var city = prvSearchEl.value.trim();
+  getCoords(city);
+}
+
+// search click listener
+setupSearchHistory();
+searchFormEl.addEventListener("submit", formSearchHandler);
+prvSearchContainEl.addEventListener("click", handleHistorySearchClick);
