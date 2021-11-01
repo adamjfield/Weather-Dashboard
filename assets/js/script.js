@@ -203,6 +203,8 @@ function formSearchHandler(event) {
   // capture city that was searched
   var city = citySearchEl.value.trim();
 
+  console.log(city);
+
   // send city to api function or alert if nothing entered
   if (city) {
     getCoords(city);
