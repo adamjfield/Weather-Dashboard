@@ -218,8 +218,9 @@ function handleHistorySearchClick(event) {
   event.preventDefault();
 
   // capture city that was searched
-  var city = prvSearchEl.value.trim();
-  getCoords(city);
+  var city = prvSearchContainEl;
+  console.log(city);
+  // getCoords(city);
 }
 
 // search click listener

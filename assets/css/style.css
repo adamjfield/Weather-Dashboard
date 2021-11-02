@@ -46,6 +46,7 @@ button {
   width: 100%;
   margin: 10px;
   text-align: center;
+  color: black;
   background-color: rgb(165, 164, 164);
   border-radius: 5px;
 }
