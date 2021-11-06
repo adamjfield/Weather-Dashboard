@@ -214,13 +214,16 @@ function formSearchHandler(event) {
   }
 }
 
-function handleHistorySearchClick(event) {
-  event.preventDefault();
+function handleHistorySearchClick(e) {
+  if (!e.target.matches(".prvSearch")) {
+    return;
+  }
 
+  var btn = e.target
   // capture city that was searched
-  var city = prvSearchContainEl;
-  console.log(city);
-  // getCoords(city);
+  var search = btn.getAttribute("dataSearch");
+  console.log(search);
+  getCoords(search);
 }
 
 // search click listener
