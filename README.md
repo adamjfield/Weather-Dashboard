@@ -12,7 +12,7 @@ User can search any city and the application will display the current weather wi
 
 ## Link to Application
 
-https://adamjfield.github.io/WeatherDashboard-AdamField/
+https://adamjfield.github.io/Weather-Dashboard/
 
 ## Screen Shots
 ### Landing page example:
