@@ -123,10 +123,10 @@ function displayCntWeather(data, name) {
   cntUvIndex.classList = "uv-index";
   if (data.current.uvi <= 2) {
     cntUvIndex.classList = "green";
-  } else if (data.current.uvi >= 3 && data.current.uvi < 6) {
+  } else if (data.current.uvi > 2 && data.current.uvi <= 6) {
     cntUvIndex.removeAttribute("class");
     cntUvIndex.classList = "yellow";
-  } else if (data.current.uvi >= 6 && data.current.uvi < 7) {
+  } else if (data.current.uvi > 6 && data.current.uvi <= 7) {
     cntUvIndex.removeAttribute("class");
     cntUvIndex.classList = "orange";
   } else {
